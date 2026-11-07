@@ -1,0 +1,73 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Course List - CoursePortal{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">Course Catalog</h1>
+
+    <!-- Search Form -->
+    <form method="GET" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search by course name or code"
+                value="{{ query }}">
+            <button type="submit" class="btn btn-primary">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <!-- Course Cards -->
+    <div class="row">
+
+        {% for course in courses %}
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ course.code }}
+                    </h5>
+
+                    <h6 class="card-subtitle mb-3 text-muted">
+                        {{ course.title }}
+                    </h6>
+
+                    <p class="card-text">
+                        <strong>Credits:</strong> {{ course.credits }}
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Instructor:</strong> {{ course.instructor }}
+                    </p>
+
+                    <p class="card-text">
+                        {{ course.description }}
+                    </p>
+
+                    <a href="{% url 'catalog:course_detail' course.id %}" class="btn btn-primary">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class="alert alert-warning">
+            No courses found.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
